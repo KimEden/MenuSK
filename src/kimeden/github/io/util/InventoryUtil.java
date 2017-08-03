@@ -9,15 +9,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
 public class InventoryUtil {
 
-    private String invKey;
     private String invTitle;
     private int invRow;
-    private Inventory inventory;
+    private Map<Integer, ItemStack> slots;
 
 
     protected InventoryUtil() {
@@ -27,13 +29,7 @@ public class InventoryUtil {
         this.invRow = invRow < 1 ? 1:invRow;
         this.invRow = invRow > 6 ? 6:invRow;
         this.invTitle = invTitle;
-        this.inventory = Bukkit.createInventory(null, this.invRow, this.invTitle);
-
-        StringBuffer sb = new StringBuffer(100);
-        sb.append(invTitle.hashCode()+(char)64);
-        sb.append(invRow+(char)64);
-        sb.append(UUID.randomUUID());
-        this.invKey = sb.toString().trim();
+        this.slots = new HashMap<>();
     }
 
 
@@ -41,11 +37,8 @@ public class InventoryUtil {
     public String toString() {
         return "t: "+this.invTitle+", r: "+this.invRow;
     }
-    public String getKey() {
-        return this.invKey;
-    }
-    public Inventory getInv() {
-        return this.inventory;
+    public Map<Integer, ItemStack> getInv() {
+        return this.slots;
     }
 
 }
